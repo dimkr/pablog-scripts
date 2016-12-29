@@ -140,14 +140,17 @@ for i in range(len(mb)):
 	em = email.message_from_string(mes.as_string())
 
 	subject = em.get('Subject')
-	if subject.find('=?') != -1:
-		ll = email.header.decode_header(subject)
+	if subject and subject.find('=?') != -1:
+		try:
+		    ll = email.header.decode_header(subject)
+		except:
+                    continue
 		subject = ""
 		for l in ll:
 			subject = subject + l[0]
 
 	em_from = em.get('From')
-	if em_from.find('=?') != -1:
+	if em_from and em_from.find('=?') != -1:
 		ll = email.header.decode_header(em_from)
 		em_from = ""
 		for l in ll:
